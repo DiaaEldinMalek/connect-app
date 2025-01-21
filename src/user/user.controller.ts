@@ -7,10 +7,13 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('register')
-  async register(@Body() body: { username: string; password: string }) {
-    const { username, password } = body;
+  async register(@Body() body: { username: string; password: string, name: string }) {
+    const { username, password, name } = body;
+
+    await this.userService.validateUserData(username, password, name);
+
     Logger.log("Attempted creating user")
-    const userId = await this.userService.createUser(username, password);
+    const userId = await this.userService.createUser(username, password, name);
     Logger.log("Created new user", userId)
     return { id: userId };
   }
