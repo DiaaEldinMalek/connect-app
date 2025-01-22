@@ -103,5 +103,9 @@ Idempotency-Key: <UNIQUE_KEY>
 }
 ```
 
-# Usage
+## Usage
 The easiest way to test the application is through postman. Install postman and click **Import** to load the collection titled **postmanAPIs.json** into Postman.
+
+
+## Limitations
+- Sensitive data is provided in the *docker-compose.yaml*  file, such as the database user/password and the JWT secret. This issue can be solved by using docker secrets or .env files, but due to lack of time and the fact that this is a mock database, I left it there.
