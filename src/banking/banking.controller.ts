@@ -15,8 +15,7 @@ export class BankingController {
             {
                 if (!transactionKey) {throw new BadRequestException("Transaction-Key header is required")};
                 if (!amount || amount < 0 ||  typeof amount !== 'number') {throw new BadRequestException('Invalid deposit amount');}
-                const userId = req.user._id;
-
+                const userId = req.user._id.toString();
                 return this.bankingService.makeDeposit(userId, amount, transactionKey)
             }
 
