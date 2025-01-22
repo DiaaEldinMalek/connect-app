@@ -24,12 +24,13 @@ This is a NestJS-based RESTful API with user registration, login, and deposit fu
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repo-url>
-cd <your-app-name>
+git clone https://github.com/DiaaEldinMalek/connect-app.git
+cd connect-app
 ```
 
 
-### 2. Clone the Repository
+### 2. Build and Run with Docker Compose
+
 ```bash
 docker-compose up --build
 ```
@@ -43,9 +44,9 @@ This will:
 - Run the application on http://localhost:3000.
 
 
-### API Endpoints
-## User Registration
-- ## POST /users/register
+## API Endpoints
+### User Registration
+- #### POST /users/register
 
 - - Request Body:
 
@@ -54,5 +55,50 @@ This will:
   "username": "testuser",
   "password": "testpassword",
   "name": "Test User"
+}
+```
+
+- - Response:
+```json
+{
+    "id": "6791029655e7397961193358"
+}
+```
+
+### User Login
+- #### POST /auth/login
+
+- - Request Body:
+
+```json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+```
+- - Response:
+
+```json
+{
+  "access_token": "<JWT_TOKEN>"
+}
+```
+
+### Deposit Money
+- #### POST /deposit
+
+- - Headers:
+
+Authorization: Bearer <JWT_TOKEN>
+
+Idempotency-Key: <UNIQUE_KEY>
+
+- - Request Body:
+
+```json
+
+{
+  "amount": 100
 }
 ```
