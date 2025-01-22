@@ -11,7 +11,8 @@ export class BankingService {
 
         const existingDeposit = await this.db.collection('deposits').findOne({ transactionKey })
 
-        if (existingDeposit) {return existingDeposit}
+        if (existingDeposit && existingDeposit.userId == userId) {return existingDeposit}
+        else if (existingDeposit) {throw new ConflictException("Transaction key invalid")}
         
         const deposit ={
             userId,
@@ -19,7 +20,7 @@ export class BankingService {
             transactionKey,
             createdAt: new Date(),
 
-        }
+        } 
         
         const result = this.db.collection('deposits').insertOne(deposit)
         return {_id: (await result).insertedId, ...deposit}
