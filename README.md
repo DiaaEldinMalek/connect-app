@@ -102,3 +102,6 @@ Idempotency-Key: <UNIQUE_KEY>
   "amount": 100
 }
 ```
+
+# Usage
+The easiest way to test the application is through postman. Install postman and click **Import** to load the collection titled **postmanAPIs.json** into Postman.
