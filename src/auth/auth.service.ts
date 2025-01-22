@@ -15,12 +15,14 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.hashedPassword))) {
       return user;
     }
+    Logger.log(`Invalid login attempt for user ${username}`);
     return null;
   }
 
   async login(user: any) {
     const payload = { username: user.username, userId: user._id };
     const access_token = this.jwtService.sign(payload);
+    Logger.log(`Valid login for user: ${user.username}`)
 
     return {
 

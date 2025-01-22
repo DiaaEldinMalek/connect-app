@@ -12,7 +12,6 @@ export class UserController {
 
     await this.userService.validateUserData(username, password, name);
 
-    Logger.log("Attempted creating user")
     const userId = await this.userService.createUser(username, password, name);
     Logger.log("Created new user", userId)
     return { id: userId };

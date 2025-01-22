@@ -39,6 +39,7 @@ export class UserService {
       name,
       createdAt: new Date(),
     });
+    Logger.log(`Created user: ${result.insertedId}`)
     return result.insertedId;
   }
 }

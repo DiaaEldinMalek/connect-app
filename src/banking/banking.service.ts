@@ -10,9 +10,10 @@ export class BankingService {
     async makeDeposit(userId: string, amount: number, transactionKey: string) {
 
         const existingDeposit = await this.db.collection('deposits').findOne({ transactionKey })
+        
 
-        if (existingDeposit && existingDeposit.userId == userId) {return existingDeposit}
-        else if (existingDeposit) {throw new ConflictException("Transaction key invalid")}
+        if (existingDeposit && existingDeposit.userId == userId) {Logger.log(`Cancelled duplicate deposit with key ${transactionKey}`); return existingDeposit}
+        else if (existingDeposit) {Logger.log(`Transaction key is not unique: ${transactionKey}`); throw new ConflictException("Transaction key invalid")}
         
         const deposit ={
             userId,
@@ -22,7 +23,8 @@ export class BankingService {
 
         } 
         
-        const result = this.db.collection('deposits').insertOne(deposit)
-        return {_id: (await result).insertedId, ...deposit}
+        const _id = (await this.db.collection('deposits').insertOne(deposit)).insertedId
+        Logger.log(`Wrote new transaction: ${transactionKey}`)
+        return {_id: _id, ...deposit}
     }
 }
