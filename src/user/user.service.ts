@@ -14,6 +14,7 @@ export class UserService {
     if (!name) throw new BadRequestException('Name is required');
     if (!username || username.length < userMinLength) throw new BadRequestException(`Username must be at least ${userMinLength} characters long`);
     if (!password || password.length < passMinLength) throw new BadRequestException(`Password must be at least ${passMinLength} characters long`);
+    
     if (await this.findByUsername(username)) { throw new ConflictException("Username already exists") }
 
   }
@@ -30,8 +31,6 @@ export class UserService {
 
   // Create a new user (already implemented)
   async createUser(username: string, password: string, name: string) {
-
-    if (await this.findByUsername(username)) { throw new ConflictException("Username already exists") }
 
     const hashedPassword = await bcrypt.hash(password, 10)
     const result = await this.db.collection('users').insertOne({
